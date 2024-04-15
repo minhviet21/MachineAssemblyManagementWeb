@@ -3,7 +3,7 @@
 ## Contributions
 
     |No.|Name|Student ID|Email|Work|
-    |:-:|-|:-:|-|
+    |:-:|-|:-:|-|:-:|
     |1|Doan Minh Viet|20210933|viet.dm210933sis.hust.edu.vn|Backend|
     |2|Nguyen Viet Trung|20214934|trung.nv214934@sis.hust.edu.vn|Frontend|
     |3|Do Hoang Tuan|20214939|tuan.dh214939@sis.hust.edu.vn|Frontend|
