@@ -24,14 +24,14 @@ def updateproductcomponent(request, id):
         return redirect('productcomponent')
     return render(request, "myproject/updateproductcomponent.html", {'pro_com': pro_com})
 
-def update(request, id):
-    aa = get_object_or_404(AA, id=id)
+def addproductcomponent(request):
     if request.method == 'POST':
-        x = request.POST.get('x')
-        y = request.POST.get('y')
-        # Update the attributes of aa
-        aa.x = x
-        aa.y = y
-        aa.save()
-        return redirect('AA')  # replace 'success_url' with your desired redirect URL
-    return render(request, "myproject/update.html", {'aa': aa})
+        product_type = request.POST.get('product_type')
+        component_type = request.POST.get('component_type')
+        quantity = request.POST.get('quantity')
+        pro_com = ProductComponent(product_type=product_type, component_type=component_type, quantity=quantity)
+        pro_com.save()
+        return redirect('productcomponent')
+    else:
+        pro_com = None
+    return render(request, "myproject/addproductcomponent.html", {'pro_com': pro_com})
