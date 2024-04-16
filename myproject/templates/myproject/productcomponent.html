@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+
+{% if list_product %}
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Product Type</th>
+            <th>Component Type</th>
+            <th>Quantity</th>
+        </tr>
+    {% for product in list_product %}
+        <tr>
+            <td><a href="/productcomponent/{{ product.id }}/">{{ product.id }}</a></td>
+            <td>{{ product.product_type }}</td>
+            <td>{{ product.component_type }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No products are available.</p>
+{% endif %}
+
+</body>
+</html>
+
