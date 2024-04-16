@@ -7,7 +7,7 @@
 </head>
 <body>
 
-{% if list_product %}
+{% if list_pro_com %}
     <table border="1">
         <tr>
             <th>ID</th>
@@ -15,12 +15,12 @@
             <th>Component Type</th>
             <th>Quantity</th>
         </tr>
-    {% for product in list_product %}
+    {% for pro_com in list_pro_com %}
         <tr>
-            <td><a href="/productcomponent/{{ product.id }}/">{{ product.id }}</a></td>
-            <td>{{ product.product_type }}</td>
-            <td>{{ product.component_type }}</td>
-            <td>{{ product.quantity }}</td>
+            <td><a href="/productcomponent/{{ pro_com.id }}/">{{ pro_com.id }}</a></td>
+            <td>{{ pro_com.product_type }}</td>
+            <td>{{ pro_com.component_type }}</td>
+            <td>{{ pro_com.quantity }}</td>
         </tr>
     {% endfor %}
     </table>
@@ -30,4 +30,3 @@
 
 </body>
 </html>
-
