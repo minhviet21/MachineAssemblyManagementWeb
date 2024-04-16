@@ -24,11 +24,6 @@ def updateproductcomponent(request, id):
         return redirect('productcomponent')
     return render(request, "myproject/updateproductcomponent.html", {'pro_com': pro_com})
 
-def aa(request):
-    list = AA.objects.all()
-    context = {"list": list}
-    return render(request, "myproject/aa.html", context)
-
 def update(request, id):
     aa = get_object_or_404(AA, id=id)
     if request.method == 'POST':
