@@ -15,7 +15,7 @@ class Product_Component:
     def main(request):
         list_pro_com = ProductComponent.objects.all()
         context = {"list_pro_com": list_pro_com}
-        return render(request, "myproject/productcomponent.html", context)
+        return render(request, "myproject/productcomponent/main.html", context)
 
     def update(request, id):
         pro_com = get_object_or_404(ProductComponent, id=id)
@@ -27,7 +27,7 @@ class Product_Component:
                 pro_com.quantity = quantity
                 pro_com.save()
             return redirect('manager/productcomponent')
-        return render(request, "myproject/updateproductcomponent.html", {'pro_com': pro_com})
+        return render(request, "myproject/productcomponent/update.html", {'pro_com': pro_com})
 
     def add(request):
         if request.method == 'POST':
@@ -40,4 +40,4 @@ class Product_Component:
             return redirect('manager/productcomponent')
         else:
             pro_com = None
-        return render(request, "myproject/addproductcomponent.html", {'pro_com': pro_com})
+        return render(request, "myproject/productcomponent/add.html", {'pro_com': pro_com})
