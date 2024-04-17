@@ -33,6 +33,9 @@ class Product_Component:
         if request.method == 'POST':
             product_type = request.POST.get('product_type')
             component_type = request.POST.get('component_type')
+            #check if component_type is in Component
+            if not Component.objects.filter(component_type=component_type).exists():
+                return redirect('manager/productcomponent')
             quantity = request.POST.get('quantity')
             if int(quantity) > 0:
                 pro_com = ProductComponent(product_type=product_type, component_type=component_type, quantity=quantity)

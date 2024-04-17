@@ -3,16 +3,10 @@ from django.db import models
 class Product(models.Model):
     product_type = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.product_type
-
 class Component(models.Model):
     component_type = models.CharField(max_length=100)
     supplier_name = models.CharField(max_length=100)
     supplier_address = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.component_type
 
 class ProductComponent(models.Model):
     product_type = models.CharField(max_length=100)
