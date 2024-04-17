@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import ProductComponent
+from .models import ProductComponent, ComponentInfor, OrderInfor, ProductInOrder, ComponentQuantity
 
 def homepage(request):
     return render(request, "myproject/homepage.html")
@@ -41,3 +41,35 @@ class Product_Component:
         else:
             pro_com = None
         return render(request, "myproject/productcomponent/add.html", {'pro_com': pro_com})
+
+class Component_Infor:
+    def main(request):
+        list_com_infor = ComponentInfor.objects.all()
+        context = {"list_com_infor": list_com_infor}
+        return render(request, "myproject/componentinfor/main.html", context)
+
+    def update(request, id):
+        com_infor = get_object_or_404(ComponentInfor, id=id)
+        if request.method == 'POST':
+            supplier_name = request.POST.get('supplier_name')
+            supplier_address = request.POST.get('supplier_address')
+            if supplier_name == '' or supplier_address == '':
+                com_infor.delete()
+            else:
+                com_infor.supplier_name = supplier_name
+                com_infor.supplier_address = supplier_address
+                com_infor.save()
+            return redirect('manager/componentinfor')
+        return render(request, "myproject/componentinfor/update.html", {'com_infor': com_infor})
+
+    def add(request):
+        if request.method == 'POST':
+            component_type = request.POST.get('component_type')
+            supplier_name = request.POST.get('supplier_name')
+            supplier_address = request.POST.get('supplier_address')
+            com_infor = ComponentInfor(component_type=component_type, supplier_name=supplier_name, supplier_address=supplier_address)
+            com_infor.save()
+            return redirect('manager/componentinfor')
+        else:
+            com_infor = None
+        return render(request, "myproject/componentinfor/add.html", {'com_infor': com_infor})

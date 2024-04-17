@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Information</title>
+</head>
+<body>
+
+{% if list_com_infor %}
+    <table border="1">
+        <tr>
+            <th></th>
+            <th>Component Type</th>
+            <th>Supplier Name</th>
+            <th>Supplier Address</th>
+        </tr>
+    {% for com_infor in list_com_infor %}
+        <tr>
+            <td><a href="componentinfor/{{ com_infor.id }}/">{{"Update"}}</a></td>
+            <td>{{ com_infor.component_type }}</td>
+            <td>{{ com_infor.supplier_name }}</td>
+            <td>{{ com_infor.supplier_address }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No components are available.</p>
+{% endif %}
+
+<!-- Button "Add" with a single href -->
+<button><a href="componentinfor/add">Add</a></button>
+
+</body>
+</html>
