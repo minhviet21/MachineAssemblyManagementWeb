@@ -7,7 +7,7 @@
 </head>
 <body>
 
-{% if list_com_infor %}
+{% if list_component %}
     <table border="1">
         <tr>
             <th></th>
@@ -15,12 +15,12 @@
             <th>Supplier Name</th>
             <th>Supplier Address</th>
         </tr>
-    {% for com_infor in list_com_infor %}
+    {% for component in list_component %}
         <tr>
-            <td><a href="componentinfor/{{ com_infor.id }}/">{{"Update"}}</a></td>
-            <td>{{ com_infor.component_type }}</td>
-            <td>{{ com_infor.supplier_name }}</td>
-            <td>{{ com_infor.supplier_address }}</td>
+            <td><a href="component/{{ component.id }}/">{{"Update"}}</a></td>
+            <td>{{ component.component_type }}</td>
+            <td>{{ component.supplier_name }}</td>
+            <td>{{ component.supplier_address }}</td>
         </tr>
     {% endfor %}
     </table>
@@ -29,7 +29,8 @@
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="componentinfor/add">Add</a></button>
+<button><a href="component/add">Add</a></button>
+<button><a href="/manager">Back</a></button>
 
 </body>
 </html>
