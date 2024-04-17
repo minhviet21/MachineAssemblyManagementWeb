@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Product - Component</title>
 </head>
 <body>
 
 {% if list_pro_com %}
     <table border="1">
         <tr>
-            <th>ID</th>
+            <th></th>
             <th>Product Type</th>
             <th>Component Type</th>
             <th>Quantity</th>
         </tr>
     {% for pro_com in list_pro_com %}
         <tr>
-            <td><a href="/productcomponent/{{ pro_com.id }}/">{{ pro_com.id }}</a></td>
+            <td><a href="/productcomponent/{{ pro_com.id }}/">{{"Update"}}</a></td>
             <td>{{ pro_com.product_type }}</td>
             <td>{{ pro_com.component_type }}</td>
             <td>{{ pro_com.quantity }}</td>
