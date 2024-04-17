@@ -17,7 +17,7 @@
         </tr>
     {% for pro_com in list_pro_com %}
         <tr>
-            <td><a href="/productcomponent/{{ pro_com.id }}/">{{"Update"}}</a></td>
+            <td><a href="productcomponent/{{ pro_com.id }}/">{{"Update"}}</a></td>
             <td>{{ pro_com.product_type }}</td>
             <td>{{ pro_com.component_type }}</td>
             <td>{{ pro_com.quantity }}</td>
@@ -29,7 +29,7 @@
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="/productcomponent/add">Add</a></button>
+<button><a href="productcomponent/add">Add</a></button>
 
 </body>
 </html>

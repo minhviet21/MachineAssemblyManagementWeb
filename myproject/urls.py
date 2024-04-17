@@ -4,7 +4,9 @@ from . import views
 
 urlpatterns = [
     path("", views.homepage, name=""),
-    path("productcomponent", views.productcomponent, name="productcomponent"),
-    path("productcomponent/<int:id>/", views.updateproductcomponent, name="productcomponent/id/"),
-    path("productcomponent/add", views.addproductcomponent, name="productcomponent/add"),
+    path("manager", views.manager, name="manager"),
+    path("staff", views.staff, name="staff"),
+    path("manager/productcomponent", views.productcomponent, name="manager/productcomponent"),
+    path("manager/productcomponent/<int:id>/", views.updateproductcomponent, name="manager/productcomponent/id/"),
+    path("manager/productcomponent/add", views.addproductcomponent, name="manager/productcomponent/add"),
 ]
