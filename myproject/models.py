@@ -16,8 +16,7 @@ class ProductComponent(models.Model):
 class Order(models.Model):
     order_id = models.IntegerField()
     adress = models.CharField(max_length=100)
-    phone_number = models.IntegerField()
-    order_date = models.DateField()
+    phone_number = models.IntegerField(null = True)
     status = models.CharField(max_length=100)
 
 class ProductInOrder(models.Model):

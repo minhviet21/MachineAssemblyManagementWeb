@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product - Component</title>
+    <title>Component of product</title>
 </head>
 <body>
 
@@ -11,25 +11,23 @@
     <table border="1">
         <tr>
             <th></th>
-            <th>Product Type</th>
             <th>Component Type</th>
             <th>Quantity</th>
         </tr>
     {% for pro_com in list_pro_com %}
         <tr>
-            <td><a href="productcomponent/{{ pro_com.id }}/">{{"Update"}}</a></td>
-            <td>{{ pro_com.product_type }}</td>
+            <td><a href="{{ pro_com.component_type }}">{{"Update"}}</a></td>
             <td>{{ pro_com.component_type }}</td>
             <td>{{ pro_com.quantity }}</td>
         </tr>
     {% endfor %}
     </table>
 {% else %}
-    <p>No products are available.</p>
+    <p>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="productcomponent/add">Add</a></button>
+<button><a href="add_component">Add</a></button>
 <button><a href="/manager">Back</a></button>
 
 </body>

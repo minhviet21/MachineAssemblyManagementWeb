@@ -7,20 +7,21 @@
 </head>
 <body>
 
-{% if list_component %}
+{% if list_order %}
     <table border="1">
         <tr>
             <th></th>
-            <th>Component Type</th>
-            <th>Supplier Name</th>
-            <th>Supplier Address</th>
+            <th>Order ID</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Status</th>
         </tr>
-    {% for component in list_component %}
+    {% for order in list_order %}
         <tr>
-            <td><a href="component/{{ component.component_type }}/">{{"Update"}}</a></td>
-            <td>{{ component.component_type }}</td>
-            <td>{{ component.supplier_name }}</td>
-            <td>{{ component.supplier_address }}</td>
+            <td><a href="component/{{ order.id }}/">{{order.id}}</a></td>
+            <td>{{ order.order_id }}</td>
+            <td>{{ order.supplier_name }}</td>
+            <td>{{ order.supplier_address }}</td>
         </tr>
     {% endfor %}
     </table>
@@ -30,7 +31,7 @@
 
 <!-- Button "Add" with a single href -->
 <button><a href="component/add">Add</a></button>
-<button><a href="/manager">Back</a></button>
+<button><a href="/staff">Back</a></button>
 
 </body>
 </html>

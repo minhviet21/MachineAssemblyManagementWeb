@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - Component</title>
+</head>
+<body>
+
+{% if list_product %}
+    <table border="1">
+        <tr>
+            <th></th>
+            <th>Product Type</th>
+        </tr>
+    {% for product in list_product %}
+        <tr>
+            <td><a href="product/{{ product.product_type }}/">{{"Detail"}}</a></td>
+            <td>{{ product.product_type }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No products are available.</p>
+{% endif %}
+
+<!-- Button "Add" with a single href -->
+<button><a href="product/add_product">Add</a></button>
+<button><a href="/manager">Back</a></button>
+
+</body>
+</html>
