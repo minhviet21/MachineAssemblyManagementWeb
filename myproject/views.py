@@ -96,3 +96,66 @@ class Order_:
         list_order = Order.objects.all()
         context = {"list_order": list_order}
         return render(request, "myproject/order/main.html", context)
+
+    def add_order(request):
+        if request.method == 'POST':
+            if Order.objects.all().count() == 0:
+                order_id = 1
+            else:
+                order_id = Order.objects.latest('order_id').order_id + 1
+            address = request.POST.get('address')
+            phone_number = request.POST.get('phone_number')
+            status = "Not produced"
+            order = Order(order_id=order_id, address=address, phone_number=phone_number, status=status)
+            order.save()
+            return redirect('staff/order')
+        return render(request, "myproject/order/add_order.html")
+
+    def update_order(request, order_id):
+        order = get_object_or_404(Order, order_id=order_id)
+        if request.method == 'POST':
+            address = request.POST.get('address')
+            phone_number = request.POST.get('phone_number')
+            if address == '':
+                order.delete()
+            else:
+                order.address = address
+                order.phone_number = phone_number
+                order.save()
+            return redirect('staff/order')
+        return render(request, "myproject/order/update_order.html", {'order': order})
+
+    def show_product(request, order_id):
+        order = get_object_or_404(Order, order_id=order_id)
+        list_pro_in_order = ProductInOrder.objects.filter(order_id=order.order_id)
+        context = {"list_pro_in_order": list_pro_in_order, "order": order}
+        return render(request, "myproject/order/show_product.html", context)
+
+    def add_product(request, order_id):
+        order = get_object_or_404(Order, order_id=order_id)
+        if request.method == 'POST':
+            product_type = request.POST.get('product_type')
+            quantity = request.POST.get('quantity')
+            if Product.objects.filter(product_type=product_type).exists() and int(quantity) > 0:
+                pro_in_order = ProductInOrder(order_id=order.order_id, product_type=product_type, quantity=quantity)
+                pro_in_order.save()
+            return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
+        else:
+            pro_in_order = None
+        return render(request, "myproject/order/add_product.html", {'pro_in_order': pro_in_order, 'order': order})
+
+    def update_product(request, order_id, product_type):
+        pro_in_order = get_object_or_404(ProductInOrder, order_id=order_id, product_type=product_type)
+        if request.method == 'POST':
+            quantity = request.POST.get('quantity')
+            if int(quantity) <= 0:
+                pro_in_order.delete()
+            else:
+                pro_in_order.quantity = quantity
+                pro_in_order.save()
+            return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
+        return render(request, "myproject/order/update_product.html", {'pro_in_order': pro_in_order})
+
+    
+
+    

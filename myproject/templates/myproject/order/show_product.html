@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+
+{% if list_pro_in_order %}
+    <table border="1">
+        <tr>
+            <th></th>
+            <th>Product Type</th>
+            <th>Quantity</th>
+        </tr>
+    {% for product in list_pro_in_order %}
+        <tr>
+            <td><a href="{{ product.product_type }}">{{"Update"}}</a></td>
+            <td>{{ product.product_type }}</td>
+            <td>{{ product.quantity }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No components are available.</p>
+{% endif %}
+
+<!-- Button "Add" with a single href -->
+<button><a href="add_product">Add</a></button>
+<button><a href="/staff/order">Back</a></button>
+
+</body>
+</html>
