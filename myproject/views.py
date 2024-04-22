@@ -108,7 +108,7 @@ class Order_:
             status = "Not produced"
             order = Order(order_id=order_id, address=address, phone_number=phone_number, status=status)
             order.save()
-            return redirect('staff/order')
+            return redirect('staff/order/order_id/show_product', order_id=order_id)
         return render(request, "myproject/order/add_order.html")
 
     def update_order(request, order_id):
@@ -117,6 +117,7 @@ class Order_:
             address = request.POST.get('address')
             phone_number = request.POST.get('phone_number')
             if address == '':
+                ProductInOrder.objects.filter(order_id=order.order_id).delete()
                 order.delete()
             else:
                 order.address = address
