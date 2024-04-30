@@ -157,6 +157,50 @@ class Order_:
             return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
         return render(request, "myproject/order/update_product.html", {'pro_in_order': pro_in_order})
 
-    
+class Request_Production_:
+    def main(request):
+        ready_to_produce = Request_Production_.list_ordered_product()
+        context = {"ready_to_produce": ready_to_produce}
+        return render(request, "myproject/production/manager.html", context)
 
+    def list_ordered_product():
+        list_product = ProductInOrder.objects.filter(status="Not produced")
+        ready_to_produce = []
+        for product in list_product:
+            if Request_Production_.check_ready(product):
+                ready_to_produce.append(product)
+        return ready_to_produce
+        
+    def check_ready(product_in_order):
+        list_component = ProductComponent.objects.filter(product_type=product_in_order.product_type)
+        for pro_com in list_component:
+            component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+            if pro_com.quantity*product_in_order.quantity > component.now:
+                return False
+        return True
+    
+    def request_production(request, order_id, product_type):
+        pro_in_order = get_object_or_404(ProductInOrder, order_id=order_id, product_type=product_type)
+        if request.method == 'POST':
+            list_component = ProductComponent.objects.filter(product_type=product_type)
+            for pro_com in list_component:
+                component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                component.now -= pro_com.quantity*pro_in_order.quantity
+                component.save()
+            pro_in_order.status = "Producing"
+            pro_in_order.save()
+        return redirect('manager/request_production')
+    
+class Confirm_Production_:
+    def main(request):
+        producing = ProductInOrder.objects.filter(status="Producing")
+        context = {"producing": producing}
+        return render(request, "myproject/production/staff.html", context)
+    
+    def confirm_produce(request, order_id, product_type):
+        pro_in_order = get_object_or_404(ProductInOrder, order_id=order_id, product_type=product_type)
+        if request.method == 'POST':
+            pro_in_order.status = "Produced"
+            pro_in_order.save()
+        return redirect('staff/confirm_production')
     
