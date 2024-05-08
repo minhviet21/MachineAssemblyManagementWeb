@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
 
-    <h1>Welcome to My Website</h1>
-    
-    <p>This is the staff page of my website.</p>
-    
-    <!-- Link to another page -->
-    <p><a href="staff/order">Click here to go to Order page</a></p>
-    <p><a href="{% url 'homepage' %}">Click here to go to back</a></p>
-
+    <header>
+        <h1>1xbed Machine Manufacturing Company</h1>
+    </header>
+    <h1 id = welcome>This is the staff page of my website.</h1>
+    <div id = link>
+    <button><a
+    href="staff/order">
+        <img src="{% static 'img/order.png' %}"  
+        width="300" 
+        height="300" >
+        <br>
+        Order
+    </a></button>
+    </div>
+    <div><a href="{% url 'homepage' %}">Click here to go to back</a></div>
 </body>
 </html>

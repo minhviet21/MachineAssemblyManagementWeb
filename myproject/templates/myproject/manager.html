@@ -4,17 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
 
-    <h1>Welcome to My Website</h1>
-    
-    <p>This is the manager page of my website.</p>
-    
-    <!-- Link to another page -->
-    <p><a href="manager/product">Click here to go to Product page</a></p>
-    <p><a href="manager/component">Click here to go to Component page</a></p>
-    <p><a href="{% url 'homepage' %}">Click here to go to back</a></p>
-
+    <header>
+        <h1>1xbed Machine Manufacturing Company</h1>
+    </header>
+    <h1 id = welcome>This is the manager page of my website.</h1>
+    <div id = link>
+    <button><a
+    href="manager/product">
+        <img src="{% static 'img/product.png' %}"  
+        width="300" 
+        height="300" >
+        <br>
+        Product
+    </a></button>
+    <button><a
+        href="manager/component">
+            <img src="{% static 'img/component.png' %}"  
+            width="300" 
+            height="300" >
+            <br>
+            Component
+    </a></button>
+    </div>
+    <div><a href="{% url 'homepage' %}">Click here to go to back</a></div>
 </body>
 </html>
