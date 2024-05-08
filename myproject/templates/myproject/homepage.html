@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Login Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
-
-    <h1>Welcome to My Website</h1>
+    <header>
+        <h1>1xbed Machine Manufacturing Company</h1>
+    </header>
     
-    <p>This is the homepage of my website.</p>
-    
-    <!-- Link to another page -->
-    <p><a href="manager">Click here to go to manager page</a></p>
-    <p><a href="staff">Click here to go to staff page</a></p>
+    <h1 id = welcome>
+        Welcome to 1xbed Machine Manufacturing Company
+    </h1>
 
+    <div id = container>
+        <h2>
+            Please login to continue
+        </h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="Username">Username:</label>
+        <input type="text" id="username" name="username" value=""><br>
+        <label for="Password">Password:</label>
+        <input type="text" id="password" name="password" value=""><br>
+        <button type="submit"><a href="manager"> Login as manager></a></button>
+        <button type="submit"><a href="staff"> Login as staff></a></button>
+    </form>
+    <p id = note>
+        If you don't have an account, please contact the administrator.
+    </p>
+</div>
 </body>
 </html>

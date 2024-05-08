@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Component Information</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/component/main.css' %}">
 </head>
 <body>
-
+    <header>
+        <h1 >Web App</h1>
+    </header>
+    <h2 > Component Information </h2>
 {% if list_component %}
     <table border="1">
         <tr>
@@ -25,7 +30,7 @@
     {% endfor %}
     </table>
 {% else %}
-    <p>No components are available.</p>
+<p id = note>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
