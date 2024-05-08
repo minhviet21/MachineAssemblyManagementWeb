@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Component Information</title>
+    <link rel="stylesheet" type="text/css" href="maincom.css">
 </head>
 <body>
-
+    <script>
+        function updateclicked(){
+            window.location.href = "update.html";
+        }
+        function addclicked(){
+            window.location.href = "add.html";
+        }
+        function backclicked(){
+            window.location.href = "myproject/templates/myproject/manager.html";
+        }
+    </script>
+        <header>
+            <h1 >Web App</h1>
+        </header>
+        <h2 > Component Information </h2>
 {% if list_component %}
     <table border="1">
         <tr>
@@ -17,7 +32,7 @@
         </tr>
     {% for component in list_component %}
         <tr>
-            <td><a href="component/{{ component.component_type }}/">{{"Update"}}</a></td>
+            <td><button onclick="updateclicked()">Update</button></td>
             <td>{{ component.component_type }}</td>
             <td>{{ component.supplier_name }}</td>
             <td>{{ component.supplier_address }}</td>
@@ -25,12 +40,15 @@
     {% endfor %}
     </table>
 {% else %}
-    <p>No components are available.</p>
+    <p id = note>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="component/add">Add</a></button>
-<button><a href="/manager">Back</a></button>
+<button onclick="addclicked()">Add</button>
+<button onclick="backclicked()">Back</button>
+<footer>
+    <p class = footer>For more information, please contact us at <a href="mailto: [email protected]"> [email protected]</a></p>
+</footer>
 
 </body>
 </html>
