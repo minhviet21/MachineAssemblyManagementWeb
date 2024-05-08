@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Component Details</h2>
+  <p>Component Type: {{ component.component_type }}</p>
+  <p>Now: {{ component.now }}</p>
+  <p>Supplying: {{ component.supplying }}</p>
+  <p>Need: {{ component.need }}</p>
+  <p>Miss: {{ component.miss }}</p>
+{% endblock %}
