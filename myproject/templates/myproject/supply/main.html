@@ -1,0 +1,16 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Component Management</h2>
+  <table>
+    {% for component in list_component %}
+      <tr>
+        <td>{{ component.component_type }}</td>
+        <td>{{ component.now }}</td>
+        <td>{{ component.supplying }}</td>
+        <td>{{ component.need }}</td>
+        <td>{{ component.miss }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
