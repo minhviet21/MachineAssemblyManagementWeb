@@ -21,11 +21,27 @@ class Product_:
     def add_product(request):
         if request.method == "POST":
             product_type = request.POST.get('product_type')
-            if not (Product.objects.filter(product_type=product_type).exists()):
+            if not (Product.objects.filter(product_type=product_type).exists()) and product_type != '':
                 product = Product(product_type=product_type)
                 product.save()
             return redirect('manager/product')
         return render(request, "myproject/product/add_product.html")
+
+    def update_product(request, product_type):
+        product = get_object_or_404(Product, product_type=product_type)
+        if request.method == 'POST':
+            product_type = request.POST.get('product_type')
+            if product_type == '':
+                ProductComponent.objects.filter(product_type=product.product_type).delete()
+                product.delete()
+            elif Product.objects.filter(product_type=product_type).exists():
+                return redirect('manager/product')
+            else:
+                ProductComponent.objects.filter(product_type=product.product_type).update(product_type=product_type)
+                product.product_type = product_type
+                product.save()
+            return redirect('manager/product')
+        return render(request, "myproject/product/update_product.html", {'product': product})
 
     def show_component(request, product_type):
         product = get_object_or_404(Product, product_type=product_type)
@@ -156,41 +172,3 @@ class Order_:
                 pro_in_order.save()
             return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
         return render(request, "myproject/order/update_product.html", {'pro_in_order': pro_in_order})
-
-
-class Supply:
-    def main(request):
-        list_component = ComponentQuantity.objects.all()
-        context = {"list_component": list_component}
-        return render(request, "myproject/component/main.html", context)
-
-    def add_component(request):
-        if request.method == "POST":
-            component_type = request.POST.get('component_type')
-            now = request.POST.get('now')
-            supplying = request.POST.get('supplying')
-            need = request.POST.get('need')
-            if not (ComponentQuantity.objects.filter(component_type=component_type).exists()):
-                component = ComponentQuantity(component_type=component_type, now=now, supplying=supplying, need=need)
-                component.save()
-            return redirect('manager/component')
-        return render(request, "myproject/component/add_component.html")
-
-    def show_component(request, component_type):
-        component = get_object_or_404(ComponentQuantity, component_type=component_type)
-        context = {"component": component}
-        return render(request, "myproject/component/show_component.html", context)
-
-    def update_component(request, component_type):
-        component = get_object_or_404(ComponentQuantity, component_type=component_type)
-        if request.method == 'POST':
-            now = request.POST.get('now')
-            supplying = request.POST.get('supplying')
-            need = request.POST.get('need')
-            if int(need) > 0:
-                component.now = now
-                component.supplying = supplying
-                component.need = need
-                component.save()
-            return redirect(reverse('manager/component/component_type', kwargs={'component_type': component_type}))
-        return render(request, "myproject/component/update_component.html", {'component': component})

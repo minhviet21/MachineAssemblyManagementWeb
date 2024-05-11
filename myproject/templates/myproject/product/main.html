@@ -11,11 +11,13 @@
     <table border="1">
         <tr>
             <th></th>
+            <th></th>
             <th>Product Type</th>
         </tr>
     {% for product in list_product %}
         <tr>
             <td><a href="product/{{ product.product_type }}">{{"Detail"}}</a></td>
+            <td><a href="product/{{ product.product_type }}/update_product">{{"UpdateA"}}</a></td>
             <td>{{ product.product_type }}</td>
         </tr>
     {% endfor %}
