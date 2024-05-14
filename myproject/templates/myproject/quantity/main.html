@@ -17,13 +17,19 @@
         <tr>
             <th></th>
             <th>Component Type</th>
+            <th>Now</th>
+            <th>Supplying</th>
             <th>Need</th>
+            <th>Miss</th>
         </tr>
     {% for component in list_quantity %}
         <tr>
             <th></th>
             <td>{{ component.component_type }}</td>
+            <td>{{ component.now }}</td>
+            <td>{{ component.supplying }}</td>
             <td>{{ component.need }}</td>
+            <td>{{ component.miss }}</td>
             
     {% endfor %}
     </table>
@@ -32,8 +38,8 @@
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="supply/send">Add</a></button>
-<button><a href="/staff">Back</a></button>
+<button><a href="quantity/add">Add</a></button>
+<button><a href="/manager">Back</a></button>
 
 </body>
 </html>

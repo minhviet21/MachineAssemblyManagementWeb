@@ -24,4 +24,10 @@ urlpatterns = [
     path("staff/order/<int:order_id>/add_product", views.Order_.add_product, name="staff/order/order_id/add_product"),
     path("staff/order/<int:order_id>/<str:product_type>", views.Order_.update_product, name="staff/order/order_id/product_type"),
 
+    path("manager/quantity", views.Quantity_.main, name="manager/quantity"),
+    path('manager/quantity/add', views.Quantity_.add, name='manager/quantity/add'),
+    #path('manager/quantity/show/<str:component_type>', views.Quantity_.show, name='quantity/show'),
+
+    path("staff/supply", views.Supply_.main, name="staff/supply"),
+    path('staff/supply/send', views.Supply_.send, name='staff/supply/send'),
 ]

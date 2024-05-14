@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Component</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/component/add.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Web App </h1>
+    </header>
+    <div class="container">
+        <h2>Add Component</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label class="label" for="component_type">Component:</label>
+            <input class="input" type="text" id="component_type" name="component_type" required><br>
+            <label class="label" for="number">Number:</label>
+            <input class="input" type="number" id="number" name="number" required><br>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+</html>

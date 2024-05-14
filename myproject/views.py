@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import ProductComponent, Component, Order, ProductInOrder, ComponentQuantity, Product
+from .forms import OrderForm
 from django.urls import reverse
 
 def homepage(request):
@@ -158,39 +159,35 @@ class Order_:
         return render(request, "myproject/order/update_product.html", {'pro_in_order': pro_in_order})
 
 
-class Supply:
+class Quantity_:
     def main(request):
-        list_component = ComponentQuantity.objects.all()
-        context = {"list_component": list_component}
-        return render(request, "myproject/component/main.html", context)
+        list_quantity = ComponentQuantity.objects.all()
+        return render(request, "myproject/quantity/main.html", {'list_quantity': list_quantity})
 
-    def add_component(request):
+    def add(request):
         if request.method == "POST":
             component_type = request.POST.get('component_type')
-            now = request.POST.get('now')
-            supplying = request.POST.get('supplying')
-            need = request.POST.get('need')
-            if not (ComponentQuantity.objects.filter(component_type=component_type).exists()):
-                component = ComponentQuantity(component_type=component_type, now=now, supplying=supplying, need=need)
+            number = int(request.POST.get('number'))
+            component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': 0, 'supplying': number, 'need': 0})
+            if not created:
+                component.supplying += number
                 component.save()
-            return redirect('manager/component')
-        return render(request, "myproject/component/add_component.html")
+            return redirect('manager/quantity')
+        return render(request, "myproject/quantity/add.html")
 
-    def show_component(request, component_type):
-        component = get_object_or_404(ComponentQuantity, component_type=component_type)
-        context = {"component": component}
-        return render(request, "myproject/component/show_component.html", context)
+    
+class Supply_:
+    def main(request):
+        list_quantity = ComponentQuantity.objects.all()
+        return render(request, "myproject/supply/main.html", {'list_quantity': list_quantity})
 
-    def update_component(request, component_type):
-        component = get_object_or_404(ComponentQuantity, component_type=component_type)
-        if request.method == 'POST':
-            now = request.POST.get('now')
-            supplying = request.POST.get('supplying')
-            need = request.POST.get('need')
-            if int(need) > 0:
-                component.now = now
-                component.supplying = supplying
-                component.need = need
+    def send(request):
+        if request.method == "POST":
+            component_type = request.POST.get('component_type')
+            number = int(request.POST.get('number'))
+            component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': 0, 'supplying': number, 'need': 0})
+            if not created:
+                component.supplying += number
                 component.save()
-            return redirect(reverse('manager/component/component_type', kwargs={'component_type': component_type}))
-        return render(request, "myproject/component/update_component.html", {'component': component})
+            return redirect('manager/quantity')
+        return render(request, "myproject/quantity/add.html")
