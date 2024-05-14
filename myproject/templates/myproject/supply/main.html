@@ -17,13 +17,13 @@
         <tr>
             <th></th>
             <th>Component Type</th>
-            <th>Need</th>
+            <th>Need to send</th>
         </tr>
     {% for component in list_quantity %}
         <tr>
             <th></th>
             <td>{{ component.component_type }}</td>
-            <td>{{ component.need }}</td>
+            <td>{{ component.supplying }}</td>
             
     {% endfor %}
     </table>

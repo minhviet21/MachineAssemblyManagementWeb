@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import ProductComponent, Component, Order, ProductInOrder, ComponentQuantity, Product
-from .forms import OrderForm
 from django.urls import reverse
 
 def homepage(request):
@@ -200,10 +199,10 @@ class Supply_:
         if request.method == "POST":
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
-            component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': 0, 'supplying': number, 'need': 0})
+            component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': number, 'supplying': 0, 'need': 0})
             if not created:
-                component.supplying += number
+                component.supplying -= number
+                component.now += number
                 component.save()
-            return redirect('manager/quantity')
-        return render(request, "myproject/quantity/add.html")
-
+            return redirect('staff/supply')
+        return render(request, "myproject/supply/send.html")
