@@ -173,6 +173,7 @@ class Order_:
                 pro_in_order.save()
             return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
         return render(request, "myproject/order/update_product.html", {'pro_in_order': pro_in_order})
+
 class Quantity_:
     def main(request):
         list_quantity = ComponentQuantity.objects.all()
