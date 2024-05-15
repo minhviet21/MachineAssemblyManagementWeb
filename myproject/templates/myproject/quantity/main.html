@@ -12,21 +12,25 @@
         <h1 >Web App</h1>
     </header>
     <h2 > Component Information </h2>
-{% if list_component %}
+{% if list_quantity %}
     <table border="1">
         <tr>
             <th></th>
             <th>Component Type</th>
-            <th>Supplier Name</th>
-            <th>Supplier Address</th>
+            <th>Now</th>
+            <th>Supplying</th>
+            <th>Need</th>
+            <th>Miss</th>
         </tr>
-    {% for component in list_component %}
+    {% for component in list_quantity %}
         <tr>
-            <td><a href="component/{{ component.component_type }}/">{{"Update"}}</a></td>
+            <th></th>
             <td>{{ component.component_type }}</td>
-            <td>{{ component.supplier_name }}</td>
-            <td>{{ component.supplier_address }}</td>
-        </tr>
+            <td>{{ component.now }}</td>
+            <td>{{ component.supplying }}</td>
+            <td>{{ component.need }}</td>
+            <td>{{ component.miss }}</td>
+            
     {% endfor %}
     </table>
 {% else %}
@@ -34,7 +38,7 @@
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="component/add">Add</a></button>
+<button><a href="quantity/add">Add</a></button>
 <button><a href="/manager">Back</a></button>
 
 </body>
