@@ -161,7 +161,7 @@ class Request_Production_:
     def main(request):
         ready_to_produce = Request_Production_.list_ordered_product()
         context = {"ready_to_produce": ready_to_produce}
-        return render(request, "myproject/production/manager.html", context)
+        return render(request, "myproject/production/manager_request.html", context)
 
     def list_ordered_product():
         list_product = ProductInOrder.objects.filter(status="Not produced")
@@ -195,9 +195,9 @@ class Confirm_Production_:
     def main(request):
         producing = ProductInOrder.objects.filter(status="Producing")
         context = {"producing": producing}
-        return render(request, "myproject/production/staff.html", context)
+        return render(request, "myproject/production/staff_confirm.html", context)
     
-    def confirm_produce(request, order_id, product_type):
+    def confirm_produced(request, order_id, product_type):
         pro_in_order = get_object_or_404(ProductInOrder, order_id=order_id, product_type=product_type)
         if request.method == 'POST':
             pro_in_order.status = "Produced"

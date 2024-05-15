@@ -4,29 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produce</title>
+    <title>Producing</title>
 </head>
 <body>
-    <h1>Ready to Produce Orders</h1>
-    {% if ready_to_produce %}
+    <h1>Producing Orders</h1>
+    {% if producing %}
     <table border="1">
         <tr>
             <th>Order ID</th>
             <th>Product Type</th>
             <th>Quantity</th>
-            <th></th>
         </tr>
-        {% for product in ready_to_produce %}
+        {% for product in producing %}
         <tr>
             <td>{{ product.order_id }}</td>
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
             <td>
-                <form method="post">
+                <form action="{% url 'staff/confirm_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="order_id" value="{{ product.order_id }}">
-                    <input type="hidden" name="product_type" value="{{ product.product_type }}">
-                    <button type="submit">Produce</button>
+                    <button type="submit">Confirm</button>
                 </form>
             </td>
         </tr>
@@ -34,6 +31,7 @@
     {% else %}
         <p>No product is available to produce.</p>
     {% endif %}
+
+    <button><a href="/staff">Back</a></button>
 </body>
 </html>
-
