@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producing</title>
+</head>
+<body>
+    <h1>Producing Orders</h1>
+    {% if producing %}
+    <table border="1">
+        <tr>
+            <th>Order ID</th>
+            <th>Product Type</th>
+            <th>Quantity</th>
+        </tr>
+        {% for product in producing %}
+        <tr>
+            <td>{{ product.order_id }}</td>
+            <td>{{ product.product_type }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+                <form action="{% url 'staff/confirm_production' order_id=product.order_id product_type=product.product_type %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Confirm</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <p>No product is available to produce.</p>
+    {% endif %}
+
+    <button><a href="/staff">Back</a></button>
+</body>
+</html>

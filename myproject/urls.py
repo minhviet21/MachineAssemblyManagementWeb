@@ -19,6 +19,9 @@ urlpatterns = [
     path("manager/component/<str:component_type>/", views.Component_.update, name="manager/component/component_type"),
     path("manager/component/add", views.Component_.add, name="manager/component/add"),
 
+    path("manager/request_production", views.Request_Production_.main, name="manager/request_production"),
+    path("manager/request_production/<int:order_id>/<str:product_type>/", views.Request_Production_.request_production, name="manager/request_production"),
+    
     path("staff/order", views.Order_.main, name="staff/order"),
     path("staff/order/add_order", views.Order_.add_order, name="staff/order/add_order"),
     path("staff/order/<int:order_id>/show_product", views.Order_.show_product, name="staff/order/order_id/show_product"),
@@ -32,4 +35,7 @@ urlpatterns = [
 
     path("staff/supply", views.Supply_.main, name="staff/supply"),
     path('staff/supply/send', views.Supply_.send, name='staff/supply/send'),
+    
+    path("staff/confirm_production", views.Confirm_Production_.main, name="staff/confirm_production"),
+    path("staff/confirm_production/<int:order_id>/<str:product_type>/", views.Confirm_Production_.confirm_produced, name="staff/confirm_production"),
 ]
