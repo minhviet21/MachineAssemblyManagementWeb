@@ -253,4 +253,3 @@ class Confirm_Production_:
             pro_in_order.status = "Produced"
             pro_in_order.save()
         return redirect('staff/confirm_production')
-    
