@@ -15,13 +15,11 @@
 {% if list_quantity %}
     <table border="1">
         <tr>
-            <th></th>
             <th>Component Type</th>
             <th>Need to send</th>
         </tr>
     {% for component in list_quantity %}
         <tr>
-            <th></th>
             <td>{{ component.component_type }}</td>
             <td>{{ component.supplying }}</td>
             
