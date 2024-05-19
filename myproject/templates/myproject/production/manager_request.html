@@ -22,7 +22,7 @@
     <div id = link>
         <div>
     <button id = choice ><a
-    href="manager/product">
+    href="product">
         <img src="{% static 'img/product.png' %}"  
         width="50" 
         height="50" >
@@ -30,7 +30,7 @@
         Product
     </a></button>
     <button id = choice><a
-        href="manager/component">
+        href="component">
             <img src="{% static 'img/component.png' %}"  
             width="50" 
             height="50" >
@@ -38,7 +38,7 @@
             Component
     </a></button>
     <button id = choice><a
-        href="manager/quantity">
+        href="quantity">
             <img src="{% static 'img/quantity.png' %}"  
             width="50" 
             height="50" >
@@ -46,7 +46,7 @@
             Quantity
     </a></button>
     <button id = choice><a
-        href="manager/request_production">
+        href="request_production">
             <img src="{% static 'img/checker.png' %}"  
             width="50" 
             height="50" >
@@ -79,7 +79,7 @@
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
             <td>
-                <form action="{% url 'manager/request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
+                <form action="{% url 'request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Produce</button>
                 </form>
