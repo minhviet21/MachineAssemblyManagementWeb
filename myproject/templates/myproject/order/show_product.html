@@ -4,88 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
-    <style>
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: #fff;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button a {
-            color: #fff;
-            text-decoration: none;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
     <header>
-        <h1>Order</h1>
+        <h1>1xbed Machine Manufacturing Company</h1>
     </header>
+    <div id = headerweb>
+    <h1 id = welcome>
+        STAFF
+    </h1>
+    <div id = link>
+    <button id = choice><a
+    href="staff/order">
+        <img src="{% static 'img/order.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Order
+    </a></button>
+    <button id = choice><a
+    href="staff/supply">
+        <img src="{% static 'img/work-list.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Supply
+    </a></button>
+    <button id = choice><a
+    href="staff/confirm_production">
+        <img src="{% static 'img/checked.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Confirm Production
+    </a></button>
+    <button id = choice>
+        <a  
+        href="/staff/order">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
+    </div>
+</div>
+<div>
+    <h2> Product</h2>
+</div>
 {% if list_pro_in_order %}
     <table border="1">
         <tr>
-            <th></th>
             <th>Product Type</th>
-            <th>Quantity</th>
+            <th colspan="2">Quantity</th>
         </tr>
     {% for product in list_pro_in_order %}
         <tr>
-            <td><a href="{{ product.product_type }}">Update</a></td>
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
+            <td width =5%><a href="{{ product.product_type }}">Update</a></td>
         </tr>
     {% endfor %}
+    <tr>
+        <td id = add colspan="3">
+            <a href="add_product" id="add" class="button">Add</a>
+        </td>
+    </tr>
     </table>
 {% else %}
     <p>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="add_product">Add</a></button>
-<button><a href="/staff/order">Back</a></button>
 </body>
 </html>

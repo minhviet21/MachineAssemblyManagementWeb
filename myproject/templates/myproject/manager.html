@@ -9,43 +9,60 @@
 </head>
 <body>
     <header>
-        <h1>1xbed Machine Manufacturing Company</h1>
+        <h1>
+            1xbed Machine Manufacturing Company
+        </h1>
     </header>
-    <h1 id = welcome>This is the manager page of my website.</h1>
+    <div id = headerweb>
+        <h1 id = welcome>
+        MANAGER
+        </h1>
+    </div>
     <div id = link>
-    <button><a
+        <div>
+    <button id = choice ><a
     href="manager/product">
         <img src="{% static 'img/product.png' %}"  
-        width="200" 
-        height="200" >
+        width="50" 
+        height="50" >
         <br>
         Product
     </a></button>
-    <button><a
+    <button id = choice><a
         href="manager/component">
             <img src="{% static 'img/component.png' %}"  
-            width="200" 
-            height="200" >
+            width="50" 
+            height="50" >
             <br>
             Component
     </a></button>
-    <button><a
+    <button id = choice><a
         href="manager/quantity">
-            <img src="{% static 'img/component.png' %}"  
-            width="200" 
-            height="200" >
+            <img src="{% static 'img/quantity.png' %}"  
+            width="50" 
+            height="50" >
             <br>
             Quantity
     </a></button>
-    <button><a
+    <button id = choice><a
         href="manager/request_production">
-            <img src="{% static 'img/component.png' %}"  
-            width="200" 
-            height="200" >
+            <img src="{% static 'img/checker.png' %}"  
+            width="50" 
+            height="50" >
             <br>
             Request Production
     </a></button>
+    <button id = choice>
+        <a  
+        href="{% url 'homepage' %}">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
     </div>
-    <div><a href="{% url 'homepage' %}">Click here to go to back</a></div>
+</div>
+    
 </body>
 </html>

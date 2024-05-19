@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <meta charset="UTF-8">
+    <title>Update Product</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/component/add.css' %}">
+</head>
 <body>
     <header>
-        <h1>Product</h1>
+        <h1>
+            1xbed Machine Manufacturing Company
+        </h1>
     </header>
-    <h2>Update Product</h2>
+    <div class="container">
+        <h2>Update Product</h2>
     <form method="post">
         {% csrf_token %}
         <label for="Product Name">Product Name:</label>
@@ -13,6 +21,6 @@
         <p>Leave the address blank if you want to delete it.</p>
         <button type="submit">Update</button>
     </form>
-
+    </div>
 </body>
 </html>

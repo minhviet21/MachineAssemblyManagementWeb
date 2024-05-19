@@ -13,32 +13,40 @@
     </header>
     <h1 id = welcome>This is the staff page of my website.</h1>
     <div id = link>
-    <button><a
+    <button id = choice><a
     href="staff/order">
         <img src="{% static 'img/order.png' %}"  
-        width="250" 
-        height="250" >
+        width="50" 
+        height="50" >
         <br>
         Order
     </a></button>
-    <button><a
+    <button id = choice><a
     href="staff/supply">
         <img src="{% static 'img/order.png' %}"  
-        width="250" 
-        height="250" >
+        width="50" 
+        height="50" >
         <br>
         Supply
     </a></button>
-    <button><a
+    <button id = choice><a
     href="staff/confirm_production">
         <img src="{% static 'img/order.png' %}"  
-        width="250" 
-        height="250" >
+        width="50" 
+        height="50" >
         <br>
         Confirm Production
     </a></button>
-
+    <button id = choice>
+        <a  
+        href="{% url 'homepage' %}">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
     </div>
-    <div><a href="{% url 'homepage' %}">Click here to go to back</a></div>
+    
 </body>
 </html>

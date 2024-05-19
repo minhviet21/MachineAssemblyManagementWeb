@@ -18,6 +18,7 @@ urlpatterns = [
     path("manager/component", views.Component_.main, name="manager/component"),
     path("manager/component/<str:component_type>/", views.Component_.update, name="manager/component/component_type"),
     path("manager/component/add", views.Component_.add, name="manager/component/add"),
+    
 
     path("manager/request_production", views.Request_Production_.main, name="manager/request_production"),
     path("manager/request_production/<int:order_id>/<str:product_type>/", views.Request_Production_.request_production, name="manager/request_production"),

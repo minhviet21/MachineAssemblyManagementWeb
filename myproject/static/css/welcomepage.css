@@ -10,13 +10,16 @@ header {
     padding: 10px 0;
     text-align: center;
 }
+
 h1#welcome {
+    background-image: url('logo.jpg');
     font-size: 40px;
     margin: 0;
     padding: 20px 0;
-    color: pink;
+    color: red;
     text-align: center;
-
+    font-style: bold;
+    
 }
 label {
     font-weight: bold;
@@ -38,8 +41,7 @@ button[type="submit"] {
     color: #fff;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-}
+    cursor: pointer;}
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
@@ -54,6 +56,7 @@ button[type="submit"]:hover {
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: black;
 }
 p#note {
     text-align: center;
@@ -70,22 +73,82 @@ footer {
     bottom: 0;
     width: 100%;
 }
-button#link {
-    background-color: #444;
+button#choice {
+    background-color: white;
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     position: center;
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    
 }
-button#link:hover {
-    background-color: #333;
+button#choice:hover {
+    background-color: grey;
 }
 div#link {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    background-color: #979191;
+    height: 120px;
+    }
+
+    table{
+        width: 90%;
+        border-collapse: collapse;
+        background-color: #f2f2f2;
+        font-size: 20px;  
+        border: 3px solid black;
+        margin-top: 10px;
+        margin: auto;
+        
+    }
+    p{
+        font-size: 20px;
+        color: red;
+        text-align: left;
+        margin-top: 20px;
+        background-image: none;
+        font-style: italic;
+    }
+    td{
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+br{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: black;
+}
+td#add {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    height:  20px;
+}
+a {
+    display: inline-block;
+    width: 100%; /* Make the button take up the full width of the cell */
+    text-decoration: none;
+    text-align: center;
+    line-height: 20px;
+}
+#maincol {
+    width: 90%;
+}
+th{
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    font-size: 40px;
+    background-color: #979191;
 }
