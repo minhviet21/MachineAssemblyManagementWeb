@@ -5,12 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Component Information</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/component/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
     <header>
-        <h1 >Web App</h1>
+        <h1>1xbed Machine Manufacturing Company</h1>
     </header>
+    <div id = headerweb>
+    <h1 id = welcome>
+        STAFF
+    </h1>
+    <div id = link>
+    <button id = choice><a
+    href="order">
+        <img src="{% static 'img/order.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Order
+    </a></button>
+    <button id = choice><a
+    href="supply">
+        <img src="{% static 'img/work-list.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Supply
+    </a></button>
+    <button id = choice><a
+    href="confirm_production">
+        <img src="{% static 'img/checked.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Confirm Production
+    </a></button>
+    <button id = choice>
+        <a  
+        href="{% url 'homepage' %}">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
+    </div>
+</div>
     <h2 > Component Information </h2>
 {% if list_quantity %}
     <table border="1">
@@ -24,14 +64,17 @@
             <td>{{ component.supplying }}</td>
             
     {% endfor %}
+    <tr>
+        <td id = add colspan="2">
+            <a href="supply/send" id="add" class="button">Add</a>
+        </td>
+    </tr>
     </table>
 {% else %}
 <p id = note>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="supply/send">Add</a></button>
-<button><a href="/staff">Back</a></button>
 
 </body>
 </html>

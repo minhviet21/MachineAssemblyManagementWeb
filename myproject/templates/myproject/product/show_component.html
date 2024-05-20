@@ -3,32 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
     <title>Component of product</title>
 </head>
 <body>
+    <header>
+        <h1>
+            1xbed Machine Manufacturing Company
+        </h1>
+    </header>
+    <div id = headerweb>
+        <h1 id = welcome>
+        MANAGER
+        </h1>
+    </div>
+    <div id = link>
+        <div>
+    <button id = choice ><a
+    href="/manager/product">
+        <img src="{% static 'img/product.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Product
+    </a></button>
+    <button id = choice><a
+        href="/manager/component">
+            <img src="{% static 'img/component.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Component
+    </a></button>
+    <button id = choice><a
+        href="/manager/quantity">
+            <img src="{% static 'img/quantity.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Quantity
+    </a></button>
+    <button id = choice><a
+        href="/manager/request_production">
+            <img src="{% static 'img/checker.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Request Production
+    </a></button>
+    <button id = choice>
+        <a  
+        href="/manager/product">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
+    </div>
+</div>
+    <h2> 
+        Product Component
+    </h2>
 
 {% if list_pro_com %}
     <table border="1">
         <tr>
-            <th></th>
             <th>Component Type</th>
-            <th>Quantity</th>
+            <th colspan="2">Quantity</th>
+
         </tr>
     {% for pro_com in list_pro_com %}
         <tr>
-            <td><a href="{{ pro_com.component_type }}">{{"Update"}}</a></td>
-            <td>{{ pro_com.component_type }}</td>
+            <td id = maincol>{{ pro_com.component_type }}</td>
             <td>{{ pro_com.quantity }}</td>
+            <td width =5%><a href="{{ pro_com.component_type }}">{{"Update"}}</a></td>
+
         </tr>
     {% endfor %}
+    <tr>
+        <td id = add colspan="3">
+            <a href="add_component" id="add" class="button">Add</a>
+        </td>
+    </tr>
     </table>
 {% else %}
     <p>No components are available.</p>
 {% endif %}
 
 <!-- Button "Add" with a single href -->
-<button><a href="add_component">Add</a></button>
-<button><a href="/manager/product">Back</a></button>
-
 </body>
 </html>

@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Component</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/component/add.css' %}">
 </head>
 <body>
+    <header>
+        <h1>
+            1xbed Machine Manufacturing Company
+        </h1>
+    </header>
+    <div class="container">
     <h2>Update Component</h2>
     <form method="post">
         {% csrf_token %}
@@ -16,6 +24,6 @@
         <p>Make the quantity <= 0 if you want to delete.</p>
         <button type="submit">Update</button>
     </form>
-
+    </div>
 </body>
 </html>

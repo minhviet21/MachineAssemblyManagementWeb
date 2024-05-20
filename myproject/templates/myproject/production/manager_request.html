@@ -4,10 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
     <title>Produce</title>
 </head>
 <body>
-    <h1>Ready to Produce Orders</h1>
+    <header>
+        <h1>
+            1xbed Machine Manufacturing Company
+        </h1>
+    </header>
+    <div id = headerweb>
+        <h1 id = welcome>
+        MANAGER
+        </h1>
+    </div>
+    <div id = link>
+        <div>
+    <button id = choice ><a
+    href="product">
+        <img src="{% static 'img/product.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Product
+    </a></button>
+    <button id = choice><a
+        href="component">
+            <img src="{% static 'img/component.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Component
+    </a></button>
+    <button id = choice><a
+        href="quantity">
+            <img src="{% static 'img/quantity.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Quantity
+    </a></button>
+    <button id = choice><a
+        href="request_production">
+            <img src="{% static 'img/checker.png' %}"  
+            width="50" 
+            height="50" >
+            <br>
+            Request Production
+    </a></button>
+    <button id = choice>
+        <a  
+        href="{% url 'homepage' %}">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
+    </div>
+</div>
+    <h2>Ready to Produce Orders</h2>
     {% if ready_to_produce %}
     <table border="1">
         <tr>
@@ -22,7 +79,7 @@
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
             <td>
-                <form action="{% url 'manager/request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
+                <form action="{% url 'request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Produce</button>
                 </form>
@@ -32,8 +89,6 @@
     {% else %}
         <p>No product is available to produce.</p>
     {% endif %}
-
-    <button><a href="/manager">Back</a></button>
 </body>
 </html>
 

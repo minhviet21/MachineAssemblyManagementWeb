@@ -5,9 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producing</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/welcomepage.css' %}">
 </head>
 <body>
-    <h1>Producing Orders</h1>
+    <header>
+        <h1>1xbed Machine Manufacturing Company</h1>
+    </header>
+    <div id = headerweb>
+    <h1 id = welcome>
+        STAFF
+    </h1>
+    <div id = link>
+    <button id = choice><a
+    href="order">
+        <img src="{% static 'img/order.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Order
+    </a></button>
+    <button id = choice><a
+    href="supply">
+        <img src="{% static 'img/work-list.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Supply
+    </a></button>
+    <button id = choice><a
+    href="confirm_production">
+        <img src="{% static 'img/checked.png' %}"  
+        width="50" 
+        height="50" >
+        <br>
+        Confirm Production
+    </a></button>
+    <button id = choice>
+        <a  
+        href="{% url 'homepage' %}">
+        <img src="{% static 'img/back.png' %}"
+        width="50"
+        height="50">
+        <br>
+        Back
+    </a> </button>
+    </div>
+</div>
     {% if producing %}
     <table border="1">
         <tr>
@@ -32,6 +76,5 @@
         <p>No product is available to produce.</p>
     {% endif %}
 
-    <button><a href="/staff">Back</a></button>
 </body>
 </html>
