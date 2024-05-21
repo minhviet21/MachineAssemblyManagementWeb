@@ -67,30 +67,26 @@
         Product Component
     </h2>
 
-{% if list_pro_com %}
-    <table border="1">
-        <tr>
-            <th>Component Type</th>
-            <th colspan="2">Quantity</th>
-
-        </tr>
-    {% for pro_com in list_pro_com %}
-        <tr>
-            <td id = maincol>{{ pro_com.component_type }}</td>
-            <td>{{ pro_com.quantity }}</td>
-            <td width =5%><a href="{{ pro_com.component_type }}">{{"Update"}}</a></td>
-
-        </tr>
-    {% endfor %}
+<table border="1">
     <tr>
-        <td id = add colspan="3">
-            <a href="add_component" id="add" class="button">Add</a>
-        </td>
+        <th>Component Type</th>
+        <th colspan="2">Quantity</th>
+
     </tr>
-    </table>
-{% else %}
-    <p>No components are available.</p>
-{% endif %}
+{% for pro_com in list_pro_com %}
+    <tr>
+        <td id = maincol>{{ pro_com.component_type }}</td>
+        <td>{{ pro_com.quantity }}</td>
+        <td width =5%><a href="{{ pro_com.component_type }}">{{"Update"}}</a></td>
+
+    </tr>
+{% endfor %}
+<tr>
+    <td id = add colspan="3">
+        <a href="add_component" id="add" class="button">Add</a>
+    </td>
+</tr>
+</table>
 
 <!-- Button "Add" with a single href -->
 </body>

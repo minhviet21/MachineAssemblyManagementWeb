@@ -51,6 +51,9 @@ class Product_:
 
     def add_component(request, product_type):
         product = get_object_or_404(Product, product_type=product_type)
+        list_component = Component.objects.all()
+        list_component_in_product = ProductComponent.objects.filter(product_type=product.product_type)
+        list_component_not_in_product = list_component.exclude(component_type__in=[pro_com.component_type for pro_com in list_component_in_product])
         if request.method == 'POST':
             component_type = request.POST.get('component_type')
             quantity = request.POST.get('quantity')
@@ -61,7 +64,7 @@ class Product_:
             return redirect(reverse('manager/product/product_type', kwargs={'product_type': product_type}))
         else:
             pro_com = None
-        return render(request, "myproject/product/add_component.html", {'pro_com': pro_com, 'product': product})
+        return render(request, "myproject/product/add_component.html", {'pro_com': pro_com, 'product': product, 'list_component_not_in_product': list_component_not_in_product})
 
     def update_component(request, product_type, component_type):
         pro_com = get_object_or_404(ProductComponent, product_type=product_type, component_type=component_type)
@@ -88,6 +91,10 @@ class Component_:
             supplier_address = request.POST.get('supplier_address')
             if supplier_name == '' or supplier_address == '':
                 component.delete()
+                component_quantity = ComponentQuantity.objects.filter(component_type=component.component_type)
+                component_quantity.delete()
+                product_component = ProductComponent.objects.filter(component_type=component.component_type)
+                product_component.delete()
             else:
                 component.supplier_name = supplier_name
                 component.supplier_address = supplier_address
@@ -102,6 +109,8 @@ class Component_:
             supplier_address = request.POST.get('supplier_address')
             component = Component(component_type=component_type, supplier_name=supplier_name, supplier_address=supplier_address)
             component.save()
+            component_quantity = ComponentQuantity(component_type=component.component_type, now=0, supplying=0, need=0)
+            component_quantity.save()
             return redirect('manager/component')
         else:
             component = None
@@ -188,7 +197,6 @@ class Quantity_:
                 component.save()
             return redirect('manager/quantity')
         return render(request, "myproject/quantity/add.html")
-
     
 class Supply_:
     def main(request):
