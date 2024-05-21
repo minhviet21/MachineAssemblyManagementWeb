@@ -107,11 +107,14 @@ class Component_:
             component_type = request.POST.get('component_type')
             supplier_name = request.POST.get('supplier_name')
             supplier_address = request.POST.get('supplier_address')
-            component = Component(component_type=component_type, supplier_name=supplier_name, supplier_address=supplier_address)
-            component.save()
-            component_quantity = ComponentQuantity(component_type=component.component_type, now=0, supplying=0, need=0)
-            component_quantity.save()
-            return redirect('manager/component')
+            if not (Component.objects.filter(component_type=component_type).exists()) and component_type != '':
+                component = Component(component_type=component_type, supplier_name=supplier_name, supplier_address=supplier_address)
+                component.save()
+                component_quantity = ComponentQuantity(component_type=component.component_type, now=0, supplying=0, need=0)
+                component_quantity.save()
+                return redirect('manager/component')
+            else:
+                return redirect('manager/component')
         else:
             component = None
         return render(request, "myproject/component/add.html", {'component': component})
