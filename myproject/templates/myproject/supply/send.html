@@ -17,7 +17,11 @@
         <form method="post">
             {% csrf_token %}
             <label class="label" for="component_type">Component:</label>
-            <input class="input" type="text" id="component_type" name="component_type" required><br>
+            <select id="component_type" name="component_type">
+                {% for component in list_component %}
+                    <option value="{{ component.component_type }}">{{ component.component_type }}</option>
+                {% endfor %}
+            </select><br>
             <label class="label" for="number">Number:</label>
             <input class="input" type="number" id="number" name="number" required><br>
             <button type="submit">Add</button>

@@ -15,7 +15,7 @@
     <form method="post">
         {% csrf_token %}
         <label for="Product">Product:</label>
-        <input type="text" id="product_type" name="product_type" value="" ><br>
+        <input type="text" id="product_type" name="product_type" value="" required><br>
         <button type="submit">Add</button>
         <p></p>
         <button type="button">
