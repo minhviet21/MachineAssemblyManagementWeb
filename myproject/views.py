@@ -21,10 +21,12 @@ class Product_:
     def add_product(request):
         if request.method == "POST":
             product_type = request.POST.get('product_type')
-            if not (Product.objects.filter(product_type=product_type).exists()) and product_type != '':
+            if not (Product.objects.filter(product_type=product_type).exists()):
                 product = Product(product_type=product_type)
                 product.save()
-            return redirect('manager/product')
+                return redirect('manager/product')
+            else:
+                return render(request, "myproject/product/add_product.html")
         return render(request, "myproject/product/add_product.html")
 
     def update_product(request, product_type):
@@ -35,9 +37,10 @@ class Product_:
                 ProductComponent.objects.filter(product_type=product.product_type).delete()
                 product.delete()
             elif Product.objects.filter(product_type=product_type).exists():
-                return redirect('manager/product')
+                return render(request, "myproject/product/update_product.html", {'product': product})
             else:
                 ProductComponent.objects.filter(product_type=product.product_type).update(product_type=product_type)
+                ProductInOrder.objects.filter(product_type=product.product_type).update(product_type=product_type)
                 product.product_type = product_type
                 product.save()
             return redirect('manager/product')
@@ -59,9 +62,18 @@ class Product_:
             quantity = request.POST.get('quantity')
             if int(quantity) > 0 \
                 and (not ProductComponent.objects.filter(product_type=product.product_type, component_type=component_type).exists()):
+                # update need of component
+                component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type)
+                component_quantity.need += len(product_in_order) * int(quantity)
+                component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
+                component_quantity.save()
                 pro_com = ProductComponent(product_type=product.product_type, component_type=component_type, quantity=quantity)
                 pro_com.save()
-            return redirect(reverse('manager/product/product_type', kwargs={'product_type': product_type}))
+                return redirect(reverse('manager/product/product_type', kwargs={'product_type': product_type}))
+            else:
+                pro_com = None
+                return render(request, "myproject/product/add_component.html", {'pro_com': pro_com, 'product': product, 'list_component_not_in_product': list_component_not_in_product})
         else:
             pro_com = None
         return render(request, "myproject/product/add_component.html", {'pro_com': pro_com, 'product': product, 'list_component_not_in_product': list_component_not_in_product})
@@ -70,9 +82,20 @@ class Product_:
         pro_com = get_object_or_404(ProductComponent, product_type=product_type, component_type=component_type)
         if request.method == 'POST':
             quantity = request.POST.get('quantity')
+            component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
             if int(quantity) <= 0:
+                component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product_type)
+                component_quantity.need -= len(product_in_order) * pro_com.quantity
+                component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
+                component_quantity.save()
                 pro_com.delete()
             else:
+                component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product_type)
+                component_quantity.need += len(product_in_order) * (int(quantity) - pro_com.quantity)
+                component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
+                component_quantity.save()
                 pro_com.quantity = quantity
                 pro_com.save()
             return redirect(reverse('manager/product/product_type', kwargs={'product_type': product_type}))
@@ -145,8 +168,18 @@ class Order_:
             address = request.POST.get('address')
             phone_number = request.POST.get('phone_number')
             if address == '':
+                product_in_order = ProductInOrder.objects.filter(order_id=order.order_id)
+                for pro_in_order in product_in_order:
+                    product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
+                    for pro_com in product_component:
+                        component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                        component.need -= pro_com.quantity*pro_in_order.quantity
+                        component.save()
+                    pro_in_order.delete()
                 ProductInOrder.objects.filter(order_id=order.order_id).delete()
                 order.delete()
+            elif phone_number == '' or not phone_number.isdigit():
+                return render(request, "myproject/order/update_order.html", {'order': order})    
             else:
                 order.address = address
                 order.phone_number = phone_number
@@ -162,24 +195,45 @@ class Order_:
 
     def add_product(request, order_id):
         order = get_object_or_404(Order, order_id=order_id)
+        list_product = Product.objects.all()
+        list_product_in_order = ProductInOrder.objects.filter(order_id=order.order_id)
+        list_product_not_in_order = list_product.exclude(product_type__in=[pro_in_order.product_type for pro_in_order in list_product_in_order])
         if request.method == 'POST':
             product_type = request.POST.get('product_type')
             quantity = request.POST.get('quantity')
             if Product.objects.filter(product_type=product_type).exists() and int(quantity) > 0:
-                pro_in_order = ProductInOrder(order_id=order.order_id, product_type=product_type, quantity=quantity)
+                pro_in_order = ProductInOrder(order_id=order.order_id, product_type=product_type, quantity=int(quantity))
                 pro_in_order.save()
-            return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
+                product_component = ProductComponent.objects.filter(product_type=product_type)
+                for pro_com in product_component:
+                    component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                    component.need += pro_com.quantity*pro_in_order.quantity
+                    component.save()
+                return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
+            else:
+                pro_in_order = None
+                return render(request, "myproject/order/add_product.html", {'pro_in_order': pro_in_order, 'order': order, 'list_product_not_in_order': list_product_not_in_order})
         else:
             pro_in_order = None
-        return render(request, "myproject/order/add_product.html", {'pro_in_order': pro_in_order, 'order': order})
+        return render(request, "myproject/order/add_product.html", {'pro_in_order': pro_in_order, 'order': order, 'list_product_not_in_order': list_product_not_in_order})
 
     def update_product(request, order_id, product_type):
         pro_in_order = get_object_or_404(ProductInOrder, order_id=order_id, product_type=product_type)
         if request.method == 'POST':
             quantity = request.POST.get('quantity')
             if int(quantity) <= 0:
+                product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
+                for pro_com in product_component:
+                    component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                    component.need -= pro_com.quantity*pro_in_order.quantity
+                    component.save()
                 pro_in_order.delete()
             else:
+                product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
+                for pro_com in product_component:
+                    component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                    component.need += (int(quantity) - pro_in_order.quantity)*pro_com.quantity
+                    component.save()
                 pro_in_order.quantity = quantity
                 pro_in_order.save()
             return redirect(reverse('staff/order/order_id/show_product', kwargs={'order_id': order_id}))
@@ -191,15 +245,17 @@ class Quantity_:
         return render(request, "myproject/quantity/main.html", {'list_quantity': list_quantity})
 
     def add(request):
+        list_component = Component.objects.all()
         if request.method == "POST":
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
             component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': 0, 'supplying': number, 'need': 0})
             if not created:
                 component.supplying += number
+                component.miss = max(0, component.need - component.now - component.supplying)
                 component.save()
-            return redirect('manager/quantity')
-        return render(request, "myproject/quantity/add.html")
+            return redirect(reverse('manager/quantity'), kwargs = {'list_component': list_component})
+        return render(request, "myproject/quantity/add.html", {'list_component': list_component})
     
 class Supply_:
     def main(request):
@@ -207,16 +263,19 @@ class Supply_:
         return render(request, "myproject/supply/main.html", {'list_quantity': list_quantity})
 
     def send(request):
+        list_component = Component.objects.all()
         if request.method == "POST":
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
-            component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': number, 'supplying': 0, 'need': 0})
-            if not created:
+            component = get_object_or_404(ComponentQuantity, component_type=component_type)
+            if number > component.supplying:
+                return render(request, "myproject/supply/send.html", {'list_component': list_component})
+            else:
                 component.supplying -= number
                 component.now += number
                 component.save()
             return redirect('staff/supply')
-        return render(request, "myproject/supply/send.html")
+        return render(request, "myproject/supply/send.html", {'list_component': list_component})
 
 class Request_Production_:
     def main(request):

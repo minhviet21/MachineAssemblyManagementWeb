@@ -55,19 +55,23 @@
             <th >Order ID</th>
             <th>Address</th>
             <th >Phone Number</th>
+            <th >Status</th>
             <th colspan="2"></th>
+            
         </tr>
     {% for order in list_order %}
         <tr>
             <td width =15%>{{ order.order_id }}</td>
             <td width =60%>{{ order.address }}</td>
             <td>{{ order.phone_number }}</td>
+            <td >{{ order.status }}</td>
             <td width = 5%><a href="order/{{ order.order_id }}/update_order">Update</a></td>
             <td width = 5%><a href="order/{{ order.order_id }}/show_product">Detail</a></td>
+            
         </tr>
     {% endfor %}
     <tr>
-        <td id = add colspan="5">
+        <td id = add colspan="6">
             <a href="order/add_order" id="add" class="button">Add</a>
         </td>
     </tr>
