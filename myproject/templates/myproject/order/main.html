@@ -15,7 +15,7 @@
     <div id = link>
     <button id = choice><a
     href="order">
-        <img src="{% static 'img/order.png' %}"  
+        <img id =icon src="{% static 'img/order.png' %}"  
         width="50" 
         height="50" >
         <br>
@@ -23,7 +23,7 @@
     </a></button>
     <button id = choice><a
     href="supply">
-        <img src="{% static 'img/work-list.png' %}"  
+        <img id =icon src="{% static 'img/work-list.png' %}"  
         width="50" 
         height="50" >
         <br>
@@ -31,7 +31,7 @@
     </a></button>
     <button id = choice><a
     href="confirm_production">
-        <img src="{% static 'img/checked.png' %}"  
+        <img id =icon src="{% static 'img/checked.png' %}"  
         width="50" 
         height="50" >
         <br>
@@ -40,7 +40,7 @@
     <button id = choice>
         <a  
         href="{% url 'homepage' %}">
-        <img src="{% static 'img/back.png' %}"
+        <img id =icon src="{% static 'img/back.png' %}"
         width="50"
         height="50">
         <br>
@@ -54,7 +54,8 @@
         <tr>
             <th >Order ID</th>
             <th>Address</th>
-            <th colspan="3">Phone Number</th>
+            <th >Phone Number</th>
+            <th colspan="2"></th>
         </tr>
     {% for order in list_order %}
         <tr>

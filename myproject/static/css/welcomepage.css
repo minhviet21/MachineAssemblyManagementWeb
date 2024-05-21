@@ -16,7 +16,7 @@ h1#welcome {
     font-size: 40px;
     margin: 0;
     padding: 20px 0;
-    color: red;
+    color: #f3a66f;
     text-align: center;
     font-style: bold;
     
@@ -82,7 +82,7 @@ button#choice {
     cursor: pointer;
     position: center;
     width: 200px;
-    height: 100px;
+    height: 70px;
     margin: 10px;
     
 }
@@ -95,7 +95,7 @@ div#link {
     align-items: center;
     flex-wrap: wrap;
     background-color: #979191;
-    height: 120px;
+    height: 90px;
     }
 
     table{
@@ -151,4 +151,8 @@ th{
     text-align: center;
     font-size: 40px;
     background-color: #979191;
+}
+img#icon {
+    width: 30px;
+    height: 30px;
 }
