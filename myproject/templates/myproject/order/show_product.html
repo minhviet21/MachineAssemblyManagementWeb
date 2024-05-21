@@ -54,28 +54,24 @@
 <div>
     <h2> Product</h2>
 </div>
-{% if list_pro_in_order %}
-    <table border="1">
-        <tr>
-            <th>Product Type</th>
-            <th colspan="2">Quantity</th>
-        </tr>
-    {% for product in list_pro_in_order %}
-        <tr>
-            <td>{{ product.product_type }}</td>
-            <td>{{ product.quantity }}</td>
-            <td width =5%><a href="{{ product.product_type }}">Update</a></td>
-        </tr>
-    {% endfor %}
+<table border="1">
     <tr>
-        <td id = add colspan="3">
-            <a href="add_product" id="add" class="button">Add</a>
-        </td>
+        <th>Product Type</th>
+        <th colspan="2">Quantity</th>
     </tr>
-    </table>
-{% else %}
-    <p>No components are available.</p>
-{% endif %}
+{% for product in list_pro_in_order %}
+    <tr>
+        <td>{{ product.product_type }}</td>
+        <td>{{ product.quantity }}</td>
+        <td width =5%><a href="{{ product.product_type }}">Update</a></td>
+    </tr>
+{% endfor %}
+<tr>
+    <td id = add colspan="3">
+        <a href="add_product" id="add" class="button">Add</a>
+    </td>
+</tr>
+</table>
 
 <!-- Button "Add" with a single href -->
 </body>

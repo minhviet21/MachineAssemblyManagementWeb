@@ -64,32 +64,28 @@
     </div>
 </div>
     
-    <h2 > Component Information </h2>
-{% if list_component %}
-    <table border="1">
-        <tr>
-            <th>Component Type</th>
-            <th>Supplier Name</th>
-            <th colspan="2">Supplier Address</th>
-        </tr>
-    {% for component in list_component %}
-        <tr>
-            <td>{{ component.component_type }}</td>
-            <td>{{ component.supplier_name }}</td>
-            <td>{{ component.supplier_address }}</td>
-            <td width =5%><a href="component/{{ component.component_type }}/">{{"Update"}}</a></td>
-
-        </tr>
-    {% endfor %}
+<h2 > Component Information </h2>
+<table border="1">
     <tr>
-        <td id = add colspan="4">
-            <a href="component/add" id="add" class="button">Add</a>
-        </td>
+        <th>Component Type</th>
+        <th>Supplier Name</th>
+        <th colspan="2">Supplier Address</th>
     </tr>
-    </table>
-{% else %}
-<p id = note>No components are available.</p>
-{% endif %}
+{% for component in list_component %}
+    <tr>
+        <td>{{ component.component_type }}</td>
+        <td>{{ component.supplier_name }}</td>
+        <td>{{ component.supplier_address }}</td>
+        <td width =5%><a href="component/{{ component.component_type }}/">{{"Update"}}</a></td>
+
+    </tr>
+{% endfor %}
+<tr>
+    <td id = add colspan="4">
+        <a href="component/add" id="add" class="button">Add</a>
+    </td>
+</tr>
+</table>
 
 <!-- Button "Add" with a single href -->
 </body>
