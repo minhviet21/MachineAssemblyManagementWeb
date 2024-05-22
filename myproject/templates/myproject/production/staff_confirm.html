@@ -52,6 +52,7 @@
     </a> </button>
     </div>
 </div>
+<h2 > Confirm Production </h2>
     {% if producing %}
     <table border="1">
         <tr>
@@ -73,7 +74,7 @@
         </tr>
         {% endfor %}
     {% else %}
-        <p>No product is available to produce.</p>
+        <p id = note>No product is available to produce.</p>
     {% endif %}
 
 </body>

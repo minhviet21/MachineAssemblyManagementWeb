@@ -79,7 +79,7 @@
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
             <td>
-                <form action="{% url 'request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
+                <form action="{% url 'manager/request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Produce</button>
                 </form>
@@ -87,7 +87,7 @@
         </tr>
         {% endfor %}
     {% else %}
-        <p>No product is available to produce.</p>
+        <p id = note>No product is available to produce.</p>
     {% endif %}
 </body>
 </html>
