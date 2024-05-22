@@ -336,4 +336,14 @@ class Confirm_Production_:
         if request.method == 'POST':
             pro_in_order.status = "Produced"
             pro_in_order.save()
+            products_in_order = ProductInOrder.objects.filter(order_id=order_id)
+            check = True
+            for product_in_order in products_in_order:
+                if product_in_order.status != "Produced":
+                    check = False
+                    break
+            if check:
+                order = get_object_or_404(Order, order_id=order_id)
+                order.status = "Produced"
+                order.save()
         return redirect('staff/confirm_production')
