@@ -34,6 +34,16 @@ class Product_:
         if request.method == 'POST':
             product_type = request.POST.get('product_type')
             if product_type == '':
+                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type)
+                for pro_in_order in product_in_order:
+                    product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
+                    for pro_com in product_component:
+                        component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
+                        component.need -= pro_com.quantity*pro_in_order.quantity
+                        component.save()
+                    pro_in_order.delete()
+                ProductInOrder.objects.filter(product_type=product.product_type).delete()
+                
                 ProductComponent.objects.filter(product_type=product.product_type).delete()
                 product.delete()
             elif Product.objects.filter(product_type=product_type).exists():
@@ -62,10 +72,10 @@ class Product_:
             quantity = request.POST.get('quantity')
             if int(quantity) > 0 \
                 and (not ProductComponent.objects.filter(product_type=product.product_type, component_type=component_type).exists()):
-                # update need of component
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
                 product_in_order = ProductInOrder.objects.filter(product_type=product.product_type)
-                component_quantity.need += len(product_in_order) * int(quantity)
+                for pro_in_order in product_in_order:
+                    component_quantity.need += int(quantity)*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
                 component_quantity.save()
                 pro_com = ProductComponent(product_type=product.product_type, component_type=component_type, quantity=quantity)
@@ -86,14 +96,16 @@ class Product_:
             if int(quantity) <= 0:
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
                 product_in_order = ProductInOrder.objects.filter(product_type=product_type)
-                component_quantity.need -= len(product_in_order) * pro_com.quantity
+                for pro_in_order in product_in_order:
+                    component_quantity.need -= pro_com.quantity*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
                 component_quantity.save()
                 pro_com.delete()
             else:
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
                 product_in_order = ProductInOrder.objects.filter(product_type=product_type)
-                component_quantity.need += len(product_in_order) * (int(quantity) - pro_com.quantity)
+                for pro_in_order in product_in_order:
+                    component_quantity.need += (int(quantity) - pro_com.quantity)*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
                 component_quantity.save()
                 pro_com.quantity = quantity
@@ -306,6 +318,8 @@ class Request_Production_:
             for pro_com in list_component:
                 component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
                 component.now -= pro_com.quantity*pro_in_order.quantity
+                component.need -= pro_com.quantity*pro_in_order.quantity
+                component.miss = max(0, component.need - component.now - component.supplying)
                 component.save()
             pro_in_order.status = "Producing"
             pro_in_order.save()
