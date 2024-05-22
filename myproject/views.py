@@ -202,7 +202,7 @@ class Order_:
             product_type = request.POST.get('product_type')
             quantity = request.POST.get('quantity')
             if Product.objects.filter(product_type=product_type).exists() and int(quantity) > 0:
-                pro_in_order = ProductInOrder(order_id=order.order_id, product_type=product_type, quantity=int(quantity))
+                pro_in_order = ProductInOrder(order_id=order.order_id, product_type=product_type, quantity=int(quantity), status="Not produced")
                 pro_in_order.save()
                 product_component = ProductComponent.objects.filter(product_type=product_type)
                 for pro_com in product_component:
