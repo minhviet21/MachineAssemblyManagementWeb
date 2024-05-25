@@ -17,7 +17,7 @@
         <form method="post">
             {% csrf_token %}
             <label class="label" for="component_type">Component:</label>
-            <select id="component_type" name="component_type">
+            <select id="com_type" name="component_type">
                 {% for component in list_component %}
                     <option value="{{ component.component_type }}">{{ component.component_type }}</option>
                 {% endfor %}

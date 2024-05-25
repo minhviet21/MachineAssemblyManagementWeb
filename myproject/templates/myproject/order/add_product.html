@@ -29,10 +29,14 @@
                 <p>
                 </p>
                 <button type="button" onclick="window.history.back()">Cancel
+                </button>
             </form>
         </div>
     {% else %}
-        <p class=" note">No products available to add.</p>
+        <p id= note>No products available to add.</p>
+    </p>
+    <button type="button" onclick="window.history.back()">Cancel
+    </button>
     {% endif %}
 </body>
 </html>

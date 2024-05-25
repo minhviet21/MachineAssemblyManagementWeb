@@ -19,12 +19,12 @@
     <form method="post">
         {% csrf_token %}
         <label class = label for="Component">Component:</label>
-        <input class = input type="text" id="component_type" name="component_type" value="" required><br>
+        <input class = input type="text" id="component_type" name="component_type" value="" required > <br>
         <label class =label for="Supplier Name">Supplier Name:</label>
         <input class = input type="text" id="supplier_name" name="supplier_name" value="" required><br>
         <label class =label for="Supplier Address">Supplier Address:</label>
         <input class =input type="text" id="supplier_address" name="supplier_address" value="" required><br>
-        <button type="submit">Add</button>
+        <button type="submit">Add</button>  
         <p></p>
         <button type="button">
             <a href="/manager/component">
