@@ -35,3 +35,9 @@ class ComponentQuantity(models.Model):
     def save(self, *args, **kwargs):
         self.miss = max(0, self.need - self.now - self.supplying)
         super().save(*args, **kwargs)
+
+
+class UserLogin(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    role = models.BooleanField()

@@ -70,15 +70,15 @@
         <tr>
             <th>Order ID</th>
             <th>Product Type</th>
-            <th>Quantity</th>
-            <th></th>
+            <th colspan="2">Quantity</th>
+ 
         </tr>
         {% for product in ready_to_produce %}
         <tr>
             <td>{{ product.order_id }}</td>
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
-            <td>
+            <td width="5%">
                 <form action="{% url 'manager/request_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Produce</button>

@@ -58,14 +58,14 @@
         <tr>
             <th>Order ID</th>
             <th>Product Type</th>
-            <th>Quantity</th>
+            <th colspan="2">Quantity</th>
         </tr>
         {% for product in producing %}
         <tr>
             <td>{{ product.order_id }}</td>
             <td>{{ product.product_type }}</td>
             <td>{{ product.quantity }}</td>
-            <td>
+            <td  width="5%">
                 <form action="{% url 'staff/confirm_production' order_id=product.order_id product_type=product.product_type %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Confirm</button>

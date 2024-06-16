@@ -18,7 +18,7 @@
             <form method="post">
                 {% csrf_token %}
                 <label for="Product">Product:</label>
-                <select id="product_type" name="product_type">
+                <select id="com_type" name="product_type">
                     {% for product in list_product_not_in_order %}
                         <option value="{{ product.product_type }}">{{ product.product_type }}</option>
                     {% endfor %}

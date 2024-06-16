@@ -1,7 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import ProductComponent, Component, Order, ProductInOrder, ComponentQuantity, Product
+from .models import ProductComponent, Component, Order, ProductInOrder, ComponentQuantity, Product, UserLogin
 from django.urls import reverse
+ 
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if UserLogin.objects.filter(username=username, password=password, role=1).exists():
+            return redirect(reverse('manager'))
+        elif UserLogin.objects.filter(username=username, password=password, role=0).exists():
+            return redirect(reverse('staff'))
+        else:
+            return render(request, "myproject/homepage.html")
+    return render(request, "myproject/homepage.html")
+
 
 def homepage(request):
     return render(request, "myproject/homepage.html")
