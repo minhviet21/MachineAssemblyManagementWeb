@@ -75,12 +75,12 @@
     </tr>
 {% for product in list_pro_in_order %}
     <tr>
-        <td>{{ product.product_type }}</td>
-        <td>{{ product.quantity }}</td>
+        <td>{{ product.product_type}}</td>
+        <td>{{ product.quantity}}</td>
         {% if product.status == 'Produced' or product.status == 'Producing' %}
-        <td>Produced</td>
+        <td>{{product.status}}</td>
         {% else %}
-        <td width =5%><a href="{{ product.product_type }}">Update</a></td>
+        <td width =5%><a href="{{ product.product_type}}">Update</a></td>
         {% endif %}
     </tr>
 {% endfor %}
