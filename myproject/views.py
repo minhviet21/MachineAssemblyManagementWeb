@@ -215,7 +215,8 @@ class Order_:
     def show_product(request, order_id):
         order = get_object_or_404(Order, order_id=order_id)
         list_pro_in_order = ProductInOrder.objects.filter(order_id=order.order_id)
-        context = {"list_pro_in_order": list_pro_in_order, "order": order}
+        status = order.status
+        context = {"list_pro_in_order": list_pro_in_order, "order": order, "status": status}
         return render(request, "myproject/order/show_product.html", context)
 
     def add_product(request, order_id):
