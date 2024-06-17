@@ -77,7 +77,7 @@
     <tr>
         <td>{{ product.product_type }}</td>
         <td>{{ product.quantity }}</td>
-        {% if product.status == 'Produced' %}
+        {% if product.status == 'Produced' or product.status == 'Producing' %}
         <td>Produced</td>
         {% else %}
         <td width =5%><a href="{{ product.product_type }}">Update</a></td>
