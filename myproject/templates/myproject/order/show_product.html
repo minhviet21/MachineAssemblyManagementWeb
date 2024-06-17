@@ -77,7 +77,11 @@
     <tr>
         <td>{{ product.product_type }}</td>
         <td>{{ product.quantity }}</td>
+        {% if product.status == 'Produced' %}
+        <td>Produced</td>
+        {% else %}
         <td width =5%><a href="{{ product.product_type }}">Update</a></td>
+        {% endif %}
     </tr>
 {% endfor %}
 <tr>
