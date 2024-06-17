@@ -15,7 +15,6 @@ def login(request):
             return render(request, "myproject/homepage.html")
     return render(request, "myproject/homepage.html")
 
-
 def homepage(request):
     return render(request, "myproject/homepage.html")
 
@@ -47,16 +46,10 @@ class Product_:
         if request.method == 'POST':
             product_type = request.POST.get('product_type')
             if product_type == '':
-                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type)
-                for pro_in_order in product_in_order:
-                    product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
-                    for pro_com in product_component:
-                        component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
-                        component.need -= pro_com.quantity*pro_in_order.quantity
-                        component.save()
-                    pro_in_order.delete()
+                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type).filter(status__in=["Not produced", "Producing"])
+                if product_in_order.exists():
+                    return render(request, "myproject/product/update_product.html", {'product': product})
                 ProductInOrder.objects.filter(product_type=product.product_type).delete()
-                
                 ProductComponent.objects.filter(product_type=product.product_type).delete()
                 product.delete()
             elif Product.objects.filter(product_type=product_type).exists():
@@ -86,6 +79,9 @@ class Product_:
             if int(quantity) > 0 \
                 and (not ProductComponent.objects.filter(product_type=product.product_type, component_type=component_type).exists()):
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
+                producing_product_in_order = ProductInOrder.objects.filter(product_type=product.product_type, status="Producing")
+                if producing_product_in_order.exists():
+                    return render(request, "myproject/product/add_component.html", {'product': product, 'list_component_not_in_product': list_component_not_in_product})
                 product_in_order = ProductInOrder.objects.filter(product_type=product.product_type, status="Not produced")
                 for pro_in_order in product_in_order:
                     component_quantity.need += int(quantity)*pro_in_order.quantity
@@ -193,14 +189,13 @@ class Order_:
             address = request.POST.get('address')
             phone_number = request.POST.get('phone_number')
             if address == '':
-                product_in_order = ProductInOrder.objects.filter(order_id=order.order_id)
-                for pro_in_order in product_in_order:
+                not_produced_product_in_order = ProductInOrder.objects.filter(order_id=order.order_id, status="Not produced")
+                for pro_in_order in not_produced_product_in_order:
                     product_component = ProductComponent.objects.filter(product_type=pro_in_order.product_type)
                     for pro_com in product_component:
                         component = get_object_or_404(ComponentQuantity, component_type=pro_com.component_type)
                         component.need -= pro_com.quantity*pro_in_order.quantity
                         component.save()
-                    pro_in_order.delete()
                 ProductInOrder.objects.filter(order_id=order.order_id).delete()
                 order.delete()
             elif phone_number == '' or not phone_number.isdigit():
