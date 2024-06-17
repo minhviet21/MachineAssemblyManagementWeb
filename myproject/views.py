@@ -86,7 +86,7 @@ class Product_:
             if int(quantity) > 0 \
                 and (not ProductComponent.objects.filter(product_type=product.product_type, component_type=component_type).exists()):
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
-                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product.product_type, status="Not produced")
                 for pro_in_order in product_in_order:
                     component_quantity.need += int(quantity)*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
@@ -108,7 +108,7 @@ class Product_:
             component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
             if int(quantity) <= 0:
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
-                product_in_order = ProductInOrder.objects.filter(product_type=product_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product_type, status="Not produced")
                 for pro_in_order in product_in_order:
                     component_quantity.need -= pro_com.quantity*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
@@ -116,7 +116,7 @@ class Product_:
                 pro_com.delete()
             else:
                 component_quantity = get_object_or_404(ComponentQuantity, component_type=component_type)
-                product_in_order = ProductInOrder.objects.filter(product_type=product_type)
+                product_in_order = ProductInOrder.objects.filter(product_type=product_type, status="Not produced")
                 for pro_in_order in product_in_order:
                     component_quantity.need += (int(quantity) - pro_com.quantity)*pro_in_order.quantity
                 component_quantity.miss = max(0, component_quantity.need - component_quantity.now - component_quantity.supplying)
@@ -294,7 +294,7 @@ class Supply_:
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
             component = get_object_or_404(ComponentQuantity, component_type=component_type)
-            if number > component.supplying:
+            if number > component.supplying and number > 0:
                 return render(request, "myproject/supply/send.html", {'list_component': list_component})
             else:
                 component.supplying -= number
