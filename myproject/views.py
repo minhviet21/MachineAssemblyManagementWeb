@@ -270,6 +270,8 @@ class Quantity_:
         if request.method == "POST":
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
+            if number <= 0:
+                return render(request, "myproject/quantity/add.html", {'list_component': list_component})
             component, created = ComponentQuantity.objects.get_or_create(component_type=component_type, defaults={'now': 0, 'supplying': number, 'need': 0})
             if not created:
                 component.supplying += number
@@ -289,7 +291,7 @@ class Supply_:
             component_type = request.POST.get('component_type')
             number = int(request.POST.get('number'))
             component = get_object_or_404(ComponentQuantity, component_type=component_type)
-            if number > component.supplying and number > 0:
+            if number > component.supplying or number < 0:
                 return render(request, "myproject/supply/send.html", {'list_component': list_component})
             else:
                 component.supplying -= number
