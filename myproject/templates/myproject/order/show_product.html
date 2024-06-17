@@ -54,6 +54,20 @@
 <div>
     <h2> Order {{order.order_id}}</h2>
 </div>
+{% if status == 'Produced' %}
+<table border="1">
+    <tr>
+        <th>Product Type</th>
+        <th>Quantity</th>
+    </tr>
+{% for product in list_pro_in_order %}
+    <tr>
+        <td>{{ product.product_type }}</td>
+        <td>{{ product.quantity }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
 <table border="1">
     <tr>
         <th>Product Type</th>
@@ -72,7 +86,7 @@
     </td>
 </tr>
 </table>
+{% endif %}
 
-<!-- Button "Add" with a single href -->
 </body>
 </html>
